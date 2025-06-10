@@ -29,7 +29,7 @@ public class ImplePersonaDao implements PersonaDao {
     }
 
     @Override
-    public void eliminar(int id) {
+    public void eliminarPersona(int id) {
         for (int i = 0; i < contador; i++) {
             if (personas[i] != null && personas[i].getId() == id) {
                 personas[i] = null;
@@ -40,16 +40,29 @@ public class ImplePersonaDao implements PersonaDao {
 
     @Override
     public Persona[] obtenerTodos() {
-        int count = 0;
-        for (Persona p : personas) {
-            if (p != null) count++;
+
+        int cantidadPersonas = 0;
+
+        // Primera pasada: contar cuántas personas no son nulas
+        for (int i = 0; i < personas.length; i++) {
+            if (personas[i] != null) {
+                cantidadPersonas++;
+            }
         }
 
-        Persona[] result = new Persona[count];
-        int idx = 0;
-        for (Persona p : personas) {
-            if (p != null) result[idx++] = p;
+        // Crear arreglo con el tamaño exacto
+        Persona[] personasValidas = new Persona[cantidadPersonas];
+        int posicion = 0;
+
+        // Segunda pasada: copiar las personas válidas
+        for (int i = 0; i < personas.length; i++) {
+            if (personas[i] != null) {
+                personasValidas[posicion] = personas[i];
+                posicion++;
+            }
         }
-        return result;
+
+        return personasValidas;
     }
+
 }

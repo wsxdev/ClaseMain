@@ -4,26 +4,37 @@ import com.mycompany.classdao.*;
 import com.mycompany.personaclass.*;
 
 public class PersonaServicio {
-    private PersonaDao dao;
+    private PersonaDao personaDao;
 
-    public PersonaServicio(PersonaDao dao) {
-        this.dao = dao;
+    public PersonaServicio(PersonaDao personaDao) {
+        this.personaDao = personaDao;
     }
 
-    public void registrarPersona(Persona p) {
-        dao.agregarPersona(p);
+    public void registrarPersona(Persona registrarPersona) {
+        personaDao.agregarPersona(registrarPersona);
+    }
+
+    public void modificarPersona(Persona nuevaPersona) {
+        personaDao.modificarPersona(nuevaPersona.getId(), nuevaPersona);
+    }
+
+    public void eliminarPersona(int id) {
+        personaDao.eliminarPersona(id);
     }
 
     public void mostrarPersonas() {
-        Persona[] lista = dao.obtenerTodos();
-        for (Persona p : lista) {
-            System.out.println("ID: " + p.getId());
-            System.out.println("Nombre: " + p.getNombre());
-            System.out.println("Edad: " + p.getEdad());
-            System.out.println("Género: " + p.getGenero());
-            System.out.println("Correo: " + p.getCorreo());
-            System.out.println("Cédula: " + p.getCedula());
-            System.out.println("----------------------");
+        Persona[] lista = personaDao.obtenerTodos();
+        for (int i = 0; i < lista.length; i++) {
+            Persona varPersona = lista[i];
+            if (varPersona != null) {
+                System.out.println("ID: " + varPersona.getId());
+                System.out.println("Nombre: " + varPersona.getNombre());
+                System.out.println("Edad: " + varPersona.getEdad());
+                System.out.println("Género: " + varPersona.getGenero());
+                System.out.println("Correo: " + varPersona.getCorreo());
+                System.out.println("Cédula: " + varPersona.getCedula());
+                System.out.println("----------------------");
+            }
         }
     }
 }
