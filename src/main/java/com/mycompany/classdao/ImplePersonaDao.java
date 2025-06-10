@@ -3,56 +3,53 @@ package com.mycompany.classdao;
 import com.mycompany.personaclass.Persona;
 
 public class ImplePersonaDao implements PersonaDao {
-
-    // Persona objPersona = new Persona();
-    int contador = 0;
-    int idContador = 001;
-
-    Persona[] personas = new Persona[3];
+    private Persona[] personas = new Persona[5];
+    private int contador = 0;
+    private int idContador = 1;
 
     @Override
     public void agregarPersona(Persona persona) {
-        System.out.println("Agregando personas...");
-
-        if (contador > personas.length) {
+        if (contador < personas.length) {
             persona.setId(idContador++);
             personas[contador++] = persona;
         } else {
-            System.out.println("Error....sus datos son invalidos, vuelva a nacer");
+            System.out.println("No hay espacio disponible.");
         }
     }
 
     @Override
-    public void modificarPersona(int id) {
-
+    public void modificarPersona(int id, Persona nuevaPersona) {
+        for (int i = 0; i < contador; i++) {
+            if (personas[i] != null && personas[i].getId() == id) {
+                nuevaPersona.setId(id);
+                personas[i] = nuevaPersona;
+                break;
+            }
+        }
     }
 
     @Override
     public void eliminar(int id) {
-        personas[id] = null;
+        for (int i = 0; i < contador; i++) {
+            if (personas[i] != null && personas[i].getId() == id) {
+                personas[i] = null;
+                break;
+            }
+        }
     }
 
     @Override
-    public void imprimir(Persona persona) {
+    public Persona[] obtenerTodos() {
+        int count = 0;
+        for (Persona p : personas) {
+            if (p != null) count++;
+        }
 
-        for (int i = 0; i < contador; i++) {
-            
-            // personas [persona1(nombre,edad), persona2(nombre,edad)]
-            System.out.println("Persona: " + (i + 1));
-            System.out.println("Nombre: " + personas[i].getNombre());
-            System.out.println("Cedula: " + personas[i].getCedula());
-            System.out.println("Correo: " + personas[i].getCorreo());
-            System.out.println("Genero: " + personas[i].getGenero());
-            System.out.println("Edad: " + personas[i].getEdad());
+        Persona[] result = new Persona[count];
+        int idx = 0;
+        for (Persona p : personas) {
+            if (p != null) result[idx++] = p;
         }
-    }
-    
-    public Persona[] obtenerDatos(){
-        Persona[] resultado = new Persona[contador];
-        
-        for (int i = 0; i < contador; i++){
-            resultado[i] = personas[i];
-        }
-        return resultado;
+        return result;
     }
 }

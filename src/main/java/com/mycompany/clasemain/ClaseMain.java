@@ -1,17 +1,18 @@
-
 package com.mycompany.clasemain;
 
 import com.mycompany.classdao.*;
-import com.mycompany.personaclass.Persona;
-public class ClaseMain {
+import com.mycompany.controlador.*;
+import com.mycompany.personaclass.*;
 
+public class ClaseMain {
     public static void main(String[] args) {
         PersonaDao objPersonaDao = new ImplePersonaDao();
-        Persona[] personas = objPersonaDao.obtenerDatos();
-        System.out.println();
-        
-        objPersonaDao.agregarPersona(new Persona(001, "Licet", "08232", "liset@gmail.com", "Femenino", 19));
-        
-        System.out.println(objPersonaDao.obtenerDatos());
+        PersonaServicio servicio = new PersonaServicio(objPersonaDao);
+
+        servicio.registrarPersona(new Persona(0, "Licet", "123456", "licet@gmail.com", "Femenino", 20));
+        servicio.registrarPersona(new Persona(0, "William", "654321", "william@gmail.com", "Masculino", 21));
+
+        System.out.println("Personas registradas:");
+        servicio.mostrarPersonas();
     }
 }
